@@ -10,9 +10,9 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/01/bin/Debug/net6.0/sonar.dll",
+            "program": "${workspaceFolder}/01/dotnet6/bin/Debug/net6.0/sonar.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/01",
+            "cwd": "${workspaceFolder}/01/dotnet6",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",
             "stopAtEntry": false
