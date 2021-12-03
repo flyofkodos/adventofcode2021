@@ -999,7 +999,33 @@ string[] command = {"forward 8",
 "up 1",
 "forward 2"};
 
+// Part 1
 int horiz = 0, depth = 0;
+foreach (string c in command)
+{
+    var parts = c.Split(' ');
+    int magnitude = int.Parse(parts[1]);
+    switch (parts[0])
+    {
+        case "forward":
+            horiz += magnitude;
+            break;
+        case "backward":
+            horiz -= magnitude;
+            break;
+        case "down":
+            depth += magnitude;
+            break;
+        case "up":
+            depth -= magnitude;
+            break;
+    }
+}
+Console.WriteLine($"Depth {depth} pos {horiz} - {horiz * depth}");
+
+// Part 2
+horiz = 0;
+depth = 0;
 int aim = 0;
 foreach (string c in command)
 {
@@ -1016,9 +1042,11 @@ foreach (string c in command)
             depth -= (aim * magnitude);
             break;
         case "down":
+            //depth += magnitude;
             aim += magnitude;
             break;
         case "up":
+            //depth -= magnitude;
             aim -= magnitude;
             break;
     }
