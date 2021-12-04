@@ -16,8 +16,8 @@ SetVars(Test);
 ParseInput();
 SetVars(Real);
 ParseInput();
-// SetVars(Test);
-// ParseInput2();
+SetVars(Test);
+ParseInput2();
 SetVars(Real);
 ParseInput2();
 
