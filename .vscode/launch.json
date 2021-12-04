@@ -44,7 +44,7 @@
             // If you have changed target frameworks, make sure to update the program path.
             "program": "${workspaceFolder}/03/dotnet6/bin/Debug/net6.0/binary.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/03/dotnet6",
+            "cwd": "${workspaceFolder}",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",
             "stopAtEntry": false

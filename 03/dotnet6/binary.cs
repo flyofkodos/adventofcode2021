@@ -1,6 +1,7 @@
 int[] Test = { 0b00100, 0b11110, 0b10110, 0b10111, 0b10101, 0b01111, 0b00111, 0b11100, 0b10000, 0b11001, 0b00010, 0b01010 };
 
-var temp = System.IO.File.ReadAllLines("input.txt");
+var path = System.Reflection.Assembly.GetExecutingAssembly().Location;
+var temp = System.IO.File.ReadAllLines($"{Path.GetDirectoryName(path)}\\input.txt");
 var Real = (from x in temp
             select Convert.ToInt32(x, 2)).ToArray();
 Console.WriteLine($"test = {Day3(Test)}");
