@@ -1,6 +1,6 @@
 // Uses .NET 6
-
-var temp = System.IO.File.ReadAllLines("input.txt");
+var path = System.Reflection.Assembly.GetExecutingAssembly().Location;
+var temp = System.IO.File.ReadAllLines($"{Path.GetDirectoryName(path)}\\input.txt");
 int[] readings = Array.ConvertAll(temp, int.Parse);
 //int[] test = { 199, 200, 208, 210, 200, 207, 240, 269, 260, 263 };
 
