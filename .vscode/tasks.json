@@ -2,7 +2,7 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "build",
+            "label": "build01",
             "command": "dotnet",
             "type": "process",
             "args": [
@@ -14,25 +14,24 @@
             "problemMatcher": "$msCompile"
         },
         {
-            "label": "publish",
+            "label": "build02",
             "command": "dotnet",
             "type": "process",
             "args": [
-                "publish",
-                "${workspaceFolder}/01/dotnet6/sonar.csproj",
+                "build",
+                "${workspaceFolder}/02/dotnet6/magnitude.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
             "problemMatcher": "$msCompile"
         },
         {
-            "label": "watch",
+            "label": "build03",
             "command": "dotnet",
             "type": "process",
             "args": [
-                "watch",
-                "run",
-                "${workspaceFolder}/01/dotnet6/sonar.csproj",
+                "build",
+                "${workspaceFolder}/03/dotnet6/binary.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],

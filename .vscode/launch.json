@@ -8,7 +8,7 @@
             "name": ".NET Core Launch 01 (console)",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build",
+            "preLaunchTask": "build01",
             // If you have changed target frameworks, make sure to update the program path.
             "program": "${workspaceFolder}/01/dotnet6/bin/Debug/net6.0/sonar.dll",
             "args": [],
@@ -24,7 +24,7 @@
             "name": ".NET Core Launch 02 (console)",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build",
+            "preLaunchTask": "build02",
             // If you have changed target frameworks, make sure to update the program path.
             "program": "${workspaceFolder}/02/dotnet6/bin/Debug/net6.0/magnitude.dll",
             "args": [],
@@ -40,7 +40,7 @@
             "name": ".NET Core Launch 03 (console)",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build",
+            "preLaunchTask": "build03",
             // If you have changed target frameworks, make sure to update the program path.
             "program": "${workspaceFolder}/03/dotnet6/bin/Debug/net6.0/binary.dll",
             "args": [],
@@ -48,11 +48,6 @@
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",
             "stopAtEntry": false
-        },
-        {
-            "name": ".NET Core Attach",
-            "type": "coreclr",
-            "request": "attach"
         }
     ]
 }
