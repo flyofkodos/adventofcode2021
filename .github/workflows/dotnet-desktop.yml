@@ -12,7 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        configuration: [01/dotnet6/sonar.csproj, 02/dotnet6/magnitude.csproj]
+        configuration: [01/dotnet6/sonar.csproj, 02/dotnet6/magnitude.csproj, 02/dotnet6/binary.csproj]
 
     runs-on: windows-latest  # For a list of available runner types, refer to
                              # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on
