@@ -1,4 +1,5 @@
-string[] command = System.IO.File.ReadAllLines("input.txt");
+var path = System.Reflection.Assembly.GetExecutingAssembly().Location;
+string[] command = System.IO.File.ReadAllLines($"{Path.GetDirectoryName(path)}\\input.txt");
 
 // Part 1
 int horiz = 0, depth = 0;
