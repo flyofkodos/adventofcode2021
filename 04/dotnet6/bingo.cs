@@ -27,10 +27,10 @@ ParseInput2(); // and process for part 2
 void SetVars(string[] lines)
 {
     // Calculate how many boards, rows & columns we have
-    _boardCount = lines.Count(x => x.Length < 5);
-    _rowCount = (lines.Length - 1) / _boardCount - 1;
-    _colCount = lines[2].Split(' ', StringSplitOptions.RemoveEmptyEntries).Length;
-    _boards = new int[_boardCount, _rowCount, _colCount]; // Resize the board array
+    _boardCount = lines.Count(x => x.Length < 5); // Calculate the number of boards from the blank lines preceding them
+    _rowCount = (lines.Length - 1) / _boardCount - 1; // Calculate the number of rows per board
+    _colCount = lines[2].Split(' ', StringSplitOptions.RemoveEmptyEntries).Length; // and columns
+    _boards = new int[_boardCount, _rowCount, _colCount]; // Resize the board array accordingly
     LosingBoards.Clear(); // Make sure all boards are in play
     for (var x = 0; x < _boardCount; x++)
     {
@@ -71,7 +71,7 @@ void ParseInput()
     var sum = 0;
     for (var line = 0; line < _rowCount; line++)
     {
-        // Add each remaining number from the winning board
+        // Total each remaining number from the winning board
         for (var number = 0; number < _colCount; number++)
         {
             sum += _boards != null && _boards[board, line, number] >= 0 ? _boards[board, line, number] : 0;
@@ -116,7 +116,7 @@ void CheckNumbers(int ball)
             {
                 if (_boards != null && _boards[board, line, number] == ball)
                 {
-                    _boards[board, line, number] = -1; // Set to -1 when a number is removed
+                    _boards[board, line, number] = -1; // Set to -1 when a number is drawn
                 }
             }
         }

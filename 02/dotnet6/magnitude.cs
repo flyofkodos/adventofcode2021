@@ -44,11 +44,9 @@ foreach (string c in command)
             depth -= (aim * magnitude);
             break;
         case "down":
-            //depth += magnitude;
             aim += magnitude;
             break;
         case "up":
-            //depth -= magnitude;
             aim -= magnitude;
             break;
     }
