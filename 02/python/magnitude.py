@@ -1,6 +1,6 @@
 import os
-file_path = os.path.dirname(__file__)
-with open("%s/input.txt" % file_path) as f:
+file_path = os.path.join(os.path.dirname(__file__), "input.txt")
+with open(file_path) as f:
     lines = f.readlines()
 
 horiz = 0
