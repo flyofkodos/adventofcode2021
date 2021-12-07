@@ -1,4 +1,4 @@
-name: Python Package using Conda
+name: Python
 
 on: [push]
 
@@ -9,6 +9,7 @@ jobs:
       max-parallel: 5
       matrix:
         configuration: [01/python/sonar.py, 02/python/magnitude.py]
+        tests: [02/python]
 
     steps:
     - uses: actions/checkout@v2
@@ -20,5 +21,8 @@ jobs:
       run: |
         # $CONDA is an environment variable pointing to the root of the miniconda directory
         echo $CONDA/bin >> $GITHUB_PATH
+
+    - name: test
+      run: cd ${{ matrix.tests}} && python -m unittest
     - name: Run
       run: python  ${{ matrix.configuration }}
