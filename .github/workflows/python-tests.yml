@@ -3,7 +3,7 @@ name: Python Tests
 on: [push]
 
 jobs:
-  build-linux:
+  test-python:
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 5
