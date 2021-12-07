@@ -1,5 +1,5 @@
 import unittest
-from magnitude import part1, part1
+from magnitude import part1, part2
 
 
 class Test_day02_test(unittest.TestCase):
