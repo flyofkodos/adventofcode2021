@@ -2,6 +2,7 @@ name: .NET Core Desktop
 
 on:
   push:
+    branches: [ ** ]
     paths:
       - '**/dotnet/**'
   pull_request:
