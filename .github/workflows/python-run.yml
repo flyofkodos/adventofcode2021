@@ -1,7 +1,13 @@
 name: Python Run
 
-on: [push]
-
+on:
+  push:
+    paths:
+      - '**/python/**'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - '**/python/**'
 jobs:
   run-python:
     runs-on: ubuntu-latest

@@ -1,3 +1,4 @@
+
 var path = System.Reflection.Assembly.GetExecutingAssembly().Location;
 path = Path.GetDirectoryName(path);
 var input = File.ReadAllLines($"{path}\\Day09Input.txt").ToArray();
