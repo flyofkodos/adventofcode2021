@@ -9,6 +9,7 @@ on:
     branches: [ main ]
     paths:
       - '**/dotnet6/**'
+      - '.github/workflows/dotnet*.yaml'
 
 jobs:
   build:

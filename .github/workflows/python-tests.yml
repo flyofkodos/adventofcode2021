@@ -10,6 +10,7 @@ on:
     branches: [ main ]
     paths:
       - '**/python/**'
+      - '.github/workflows/python*.yaml'
 
 jobs:
   test-python:
