@@ -9,17 +9,17 @@ int Part1(string[] lines)
     var xMax = lines[0].Length;
     var yMax = lines.Length;
     var total = 0;
-    var surrounds = new int[4];
+    var surrounds = new int[4]; // Array for the surrounding points
     for (var y = 0; y < yMax; y++)
     {
-        for (var x = 0; x < xMax; x++)
+        for (var x = 0; x < xMax; x++) // Loop through each point
         {
             var height = int.Parse(lines[y][x].ToString());
             surrounds[0] = x > 0 ? int.Parse((lines[y][x - 1]).ToString()) : 10;
             surrounds[1] = x < xMax - 1 ? int.Parse((lines[y][x + 1]).ToString()) : 10;
             surrounds[2] = y > 0 ? int.Parse((lines[y - 1][x]).ToString()) : 10;
             surrounds[3] = y < yMax - 1 ? int.Parse((lines[y + 1][x]).ToString()) : 10;
-            if (height < surrounds.Min())
+            if (height < surrounds.Min()) // Is this the lowest local point?
             {
                 total += height + 1;
             }
@@ -39,12 +39,14 @@ int Part2(string[] lines)
         for (var x = 0; x < xMax; x++)
         {
             var height = int.Parse(lines[y][x].ToString());
+            // Compare each point around us (use 10 when we're at the edge)
             surrounds[0] = x > 0 ? int.Parse((lines[y][x - 1]).ToString()) : 10;
             surrounds[1] = x < xMax - 1 ? int.Parse((lines[y][x + 1]).ToString()) : 10;
             surrounds[2] = y > 0 ? int.Parse((lines[y - 1][x]).ToString()) : 10;
             surrounds[3] = y < yMax - 1 ? int.Parse((lines[y + 1][x]).ToString()) : 10;
-            if (height < surrounds.Min())
+            if (height < surrounds.Min()) // Are we the lowest point?
             {
+                // Add the lowest point co-ordinates to the list for later
                 lowPoints.Add(new ValueTuple<int, int>(x, y));
             }
         }
@@ -61,7 +63,7 @@ int basinSize(string[] array, ValueTuple<int, int> lowPoint)
 {
     var right = array[0].Length; // Get array width
     var bottom = array.Length; // and height
-    var plots = new int[right, bottom];
+    var plots = new int[right, bottom]; // and create an 2D array based on them
 
     // convert the string array to a grid of ints
     for (var arr = 0; arr < bottom; arr++)
