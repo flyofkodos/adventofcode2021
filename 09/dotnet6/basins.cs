@@ -1,4 +1,6 @@
-var input = File.ReadAllLines("Day09Input.txt");
+var path = System.Reflection.Assembly.GetExecutingAssembly().Location;
+path = Path.GetDirectoryName(path);
+var input = File.ReadAllLines($"{path}\\Day09Input.txt").ToArray();
 Console.WriteLine($"Part 1 is {Part1(input)}");
 Console.WriteLine($"Part 2 is {Part2(input)}");
 
