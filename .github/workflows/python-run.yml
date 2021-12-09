@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - '**/python/**'
+      - '.github/workflows/python*.yaml'
   pull_request:
     branches: [ main ]
     paths:

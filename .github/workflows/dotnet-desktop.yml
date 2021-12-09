@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - '**/dotnet6/**'
+      - '.github/workflows/dotnet*.yaml'
   pull_request:
     branches: [ main ]
     paths:
