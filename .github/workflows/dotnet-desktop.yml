@@ -10,7 +10,6 @@ on:
       - '**/dotnet6/**'
 
 jobs:
-
   build:
 
     strategy:
