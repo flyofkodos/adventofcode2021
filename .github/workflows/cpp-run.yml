@@ -3,17 +3,16 @@ name: C/C++ CI
 on:
   push:
     paths:
-      - '**/cpp/**'
-      - '.github/workflows/cpp*.yaml'
+      - "**/cpp/**"
+      - ".github/workflows/cpp*.yaml"
   pull_request:
-    branches: [ main ]
+    branches: [main]
     paths:
-      - '**/cpp/**'
-      - '.github/workflows/cpp*.yaml'
+      - "**/cpp/**"
+      - ".github/workflows/cpp*.yaml"
 
 jobs:
   build:
-
     strategy:
       matrix:
         configuration: [01/cpp]
@@ -21,10 +20,13 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: set directory
-      run: |
-        cd ${{ matrix.configuration }}
-        cmake .
-        cmake --build . .
-        Debug\output.exe
+      - uses: actions/checkout@v2
+      - name: set directory
+        run: |
+          cd ${{ matrix.configuration }}
+          mkdir build
+          cd build
+          cmake ..
+          cmake --build .
+          cd Debug
+          .\output.exe

@@ -387,6 +387,9 @@ FodyWeavers.xsd
 .idea/
 *.sln.iml
 
+# Executables
+*.exe
+
 # CMake files
 CMakeLists.txt.user
 CMakeCache.txt
