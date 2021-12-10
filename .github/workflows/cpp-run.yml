@@ -23,10 +23,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: set directory
-      run: cd  ${{ matrix.configuration }}
-    - name: configure
-      run: cmake .
-    - name: make
-      run: cmake --build . .
-    - name: run executable
-      run: Debug\output.exe
+      run: |
+        cd ${{ matrix.configuration }}
+        cmake .
+        cmake --build . .
+        Debug\output.exe
