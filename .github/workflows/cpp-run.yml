@@ -1,0 +1,32 @@
+name: C/C++ CI
+
+on:
+  push:
+    paths:
+      - '**/cpp/**'
+      - '.github/workflows/cpp*.yaml'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - '**/cpp/**'
+      - '.github/workflows/cpp*.yaml'
+
+jobs:
+  build:
+
+    strategy:
+      matrix:
+        configuration: [01/cpp]
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: set directory
+      run: cd  ${{ matrix.configuration }}
+    - name: configure
+      run: cmake .
+    - name: make
+      run: cmake --build . .
+    - name: run executable
+      run: Debug\output.exe
