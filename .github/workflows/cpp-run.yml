@@ -21,7 +21,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: set directory
+      - name: Build and run executable
         run: |
           cd ${{ matrix.configuration }}
           mkdir build
