@@ -1,42 +1,53 @@
 #include <iostream>
+#include <fstream>
+#include <vector>
 
-int part1(int[], int);
-int part2(int[], int);
+int part1(const std::vector<int> &);
+int part2(const std::vector<int> &);
 
-int main()
+void main()
 {
-    std::cout << "Hello World!\n";
-    int test[] = {199, 200, 208, 210, 200, 207, 240, 269, 260, 263};
-    std::cout << "Part 1 test is " << part1(test, std::size(test)) << std::endl;
-    std::cout << "Part 2 test is " << part2(test, std::size(test)) << std::endl;
+    std::ifstream infile;
+    infile.open("input.txt");
+    std::vector<int> input{};
+    int i;
+
+    while (infile >> i)
+    {
+        input.push_back(i);
+    }
+    infile.close();
+
+    std::cout << "Part 1 is " << part1(input) << std::endl;
+    std::cout << "Part 2 is " << part2(input) << std::endl;
 }
 
-int part1(int readings[], const int readings_count)
+auto part1(const std::vector<int> &readings) -> int
 {
     int increases = 0;
     int last_depth = 32767;
-
-    for (int x = 0; x < readings_count; x++)
+    for (const int reading : readings)
     {
-        if (readings[x] > last_depth)
+        if (reading > last_depth)
         {
             increases++;
         }
-        last_depth = readings[x];
+        last_depth = reading;
     }
     return increases;
 }
 
-int part2(int readings[], const int readings_count)
+auto part2(const std::vector<int> &readings) -> int
 {
     int increases = 0;
     int last_depth = 32767;
 
-    for (int x = 0; x < readings_count; x++)
+    for (unsigned long x = 0; x < readings.size() - 2; x++)
     {
         const int window1 = readings[x] + readings[x + 1] + readings[x + 2];
         if (window1 > last_depth)
         {
+
             increases++;
         }
         last_depth = window1;
