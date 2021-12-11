@@ -18,7 +18,7 @@ jobs:
     strategy:
       max-parallel: 5
       matrix:
-        tests: [01/python, 02/python]
+        tests: [01/python, 02/python, 03/python]
 
     steps:
     - uses: actions/checkout@v2

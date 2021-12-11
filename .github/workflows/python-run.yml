@@ -17,7 +17,7 @@ jobs:
     strategy:
       max-parallel: 5
       matrix:
-        configuration: [01/python/sonar.py, 02/python/magnitude.py]
+        configuration: [01/python/sonar.py, 02/python/magnitude.py, 03/python/binary.py]
 
     steps:
     - uses: actions/checkout@v2
