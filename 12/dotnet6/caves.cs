@@ -1,7 +1,6 @@
 var path = System.Reflection.Assembly.GetExecutingAssembly().Location;
 path = Path.GetDirectoryName(path);
 var input = File.ReadAllLines($"{path}\\Day12Input.txt");
-var input = File.ReadAllLines("Day12Input.txt");
 Console.WriteLine($"Part 1 is {Part1(input)}");
 Console.WriteLine($"Part 2 is {Part2(input)}");
 
