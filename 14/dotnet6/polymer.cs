@@ -54,6 +54,9 @@ long Part1(string[] lines, int steps)
     var charList = chars.Distinct().ToList();
     charList.Sort();
     var scores = new List<(char, long)>();
+    // TODO - change code to only tally 2nd char of each pair
+    //        plus the 1st char of the original polimer to check
+    //        if this corrects the totals without the halve hack
     foreach (var (monomer, total) in pairs)
     {
         var score = scores.FirstOrDefault(s => s.Item1 == monomer[0]);
