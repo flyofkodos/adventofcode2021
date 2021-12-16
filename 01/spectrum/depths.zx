@@ -1,0 +1,40 @@
+	DEVICE ZXSPECTRUM48
+OUT_NUM_1 equ #1A1B
+MAIN equ #8000
+	ORG MAIN
+	LD  A,' '
+	RST #10		; Must print something of the ROM call later fails
+	LD  IX,data	; Pointer for the depths data
+	LD  IY,0	; Counter for the depth changes
+	LD  BC,2000	; Number of depths to loop through
+	LD  DE,65535; Make sure the last depth is higher than the 1st reading
+loop1
+	LD  L,(IX)	; Get the low byte of the depth
+	INC IX		; 
+	LD  H,(IX)
+	INC IX
+	AND A ; Clear carry flag
+	SBC HL,DE ; HL = current, DE = last
+	ADD HL,DE ; Restore HL
+	JR  C,exit
+	INC IY
+exit
+	LD  D,H
+	LD  E,L		; Set last to current
+	DEC	 BC
+	LD  A,B
+	OR  C
+	JR  NZ,loop1
+	LD	 B,IYH
+	LD	 C,IYL	; Copy IY to BC for printing
+	CALL OUT_NUM_1 ; Print the number using the ROM routine
+	LD  A,','
+	RST #10
+	RET	
+data
+	incbin "readings.bin"
+end
+	EMPTYTRD "sonar.trd"
+	PAGE 0
+	SAVETRD "sonar.trd","sonar.C",MAIN, end-MAIN
+	SAVESNA "sonar.sna",MAIN
