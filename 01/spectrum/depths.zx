@@ -2,8 +2,9 @@
 OUT_NUM_1 equ #1A1B
 MAIN equ #8000
 	ORG MAIN
-	LD  A,' '
-	RST #10		; Must print something of the ROM call later fails
+	CALL 3438	; Clear screen
+	LD  A,2
+	CALL 5633	; Print to main area
 	LD  IX,data	; Pointer for the depths data
 	LD  IY,0	; Counter for the depth changes
 	LD  BC,2000	; Number of depths to loop through
@@ -19,18 +20,49 @@ loop1
 	JR  C,exit
 	INC IY
 exit
-	LD  D,H
-	LD  E,L		; Set last to current
+	EX DE,HL	; Set last to current
 	DEC	 BC
 	LD  A,B
 	OR  C
 	JR  NZ,loop1
-	LD	 B,IYH
-	LD	 C,IYL	; Copy IY to BC for printing
-	CALL OUT_NUM_1 ; Print the number using the ROM routine
-	LD  A,','
-	RST #10
-	RET	
+	LD	 (MAIN-2),IY	; Store IY to later
+	; Part 2
+	LD  IX,data	; Pointer for the depths data
+	LD  IY,0	; Counter for the depth changes
+	LD  BC,1998	; Number of depths to loop through
+	LD  DE,65535; Make sure the last depth is higher than the 1st reading
+loop2
+	LD  HL,0
+	PUSH BC
+	LD  C,(IX)	; Get the low byte of the depth
+	INC IX		; 
+	LD  B,(IX)
+	INC IX
+	AND A
+	ADD HL,BC
+	LD  C,(IX)	; Get the low byte of the depth
+	LD  B,(IX+1)
+	AND A
+	ADD HL,BC
+	LD  C,(IX+2)	; Get the low byte of the depth
+	LD  B,(IX+3)
+	AND A
+	ADD HL,BC
+	POP BC
+	AND A ; Clear carry flag
+	SBC HL,DE ; HL = current, DE = last
+	ADD HL,DE ; Restore HL
+	JR  C,exit2
+	INC IY
+exit2
+	EX  DE,HL	; Set last to current
+	DEC	 BC
+	LD  A,B
+	OR  C
+	JR  NZ,loop2
+	LD  (32764),IY
+	RET
+
 data
 	incbin "readings.bin"
 end
@@ -38,3 +70,4 @@ end
 	PAGE 0
 	SAVETRD "sonar.trd","sonar.C",MAIN, end-MAIN
 	SAVESNA "sonar.sna",MAIN
+	DISPLAY "Code size is:", /D, end-MAIN
