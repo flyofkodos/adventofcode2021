@@ -1,73 +1,67 @@
-	DEVICE ZXSPECTRUM48
-OUT_NUM_1 equ #1A1B
-MAIN equ #8000
+	DEVICE ZXSPECTRUM48	; Device type to create snapshots
+MAIN equ #8000			; Put in uncontended memory for speed
 	ORG MAIN
-	CALL 3438	; Clear screen
-	LD  A,2
-	CALL 5633	; Print to main area
-	LD  IX,data	; Pointer for the depths data
-	LD  IY,0	; Counter for the depth changes
-	LD  BC,2000	; Number of depths to loop through
-	LD  DE,65535; Make sure the last depth is higher than the 1st reading
+	LD  IX,data			; Pointer for the depths data
+	LD  IY,0			; Counter for the depth changes
+	LD  BC,2000			; Number of depths to loop through
+	LD  DE,65535		; Make sure the last depth is higher than the 1st reading
 loop1
-	LD  L,(IX)	; Get the low byte of the depth
-	INC IX		; 
-	LD  H,(IX)
-	INC IX
-	AND A ; Clear carry flag
-	SBC HL,DE ; HL = current, DE = last
-	ADD HL,DE ; Restore HL
-	JR  C,exit
-	INC IY
+	LD  L,(IX)			; Get the low byte of the depth
+	INC IX				; INC the data pointer 
+	LD  H,(IX)			; Get the high byte of the depth
+	INC IX				; INC the pointer again
+	EX  DE,HL			; HL = last, DE = current
+	AND A				; Clear carry flag for the SBC
+	SBC HL,DE			; Is current > last?
+	JR  NC,exit			; Skip the INC if current <= last
+	INC IY				; Increment the increases counter
 exit
-	EX DE,HL	; Set last to current
-	DEC	 BC
-	LD  A,B
+	DEC	 BC				; Decrement the loop counter
+	LD  A,B				; and check if it's zero
 	OR  C
-	JR  NZ,loop1
+	JR  NZ,loop1		; Keep looping if not
 	LD	 (MAIN-2),IY	; Store IY to later
-	; Part 2
-	LD  IX,data	; Pointer for the depths data
-	LD  IY,0	; Counter for the depth changes
-	LD  BC,1998	; Number of depths to loop through
-	LD  DE,65535; Make sure the last depth is higher than the 1st reading
+					; Part 2
+	LD  IX,data			; Pointer for the depths data
+	LD  IY,0			; Counter for the depth increases
+	LD  BC,1998			; Number of depths to loop through
+	LD  DE,65535		; Make sure the last depth is higher than the 1st reading
 loop2
-	LD  HL,0
-	PUSH BC
-	LD  C,(IX)	; Get the low byte of the depth
-	INC IX		; 
-	LD  B,(IX)
-	INC IX
-	AND A
+	LD  HL,0			; Clear the window variable
+	PUSH BC				; Save the loop counter
+	LD  C,(IX)			; Get the low byte of the depth
+	INC IX				; Increment the data pointer
+	LD  B,(IX)			; Get the high byte of the depth
+	INC IX				; Increment the data pointer again
+	ADD HL,BC			; Add the reading to the window variable
+	LD  C,(IX)			; Get the low byte of the (reading + 1) reading
+	LD  B,(IX+1)		; Get the high byte of the (reading + 1) reading
 	ADD HL,BC
-	LD  C,(IX)	; Get the low byte of the depth
-	LD  B,(IX+1)
-	AND A
-	ADD HL,BC
-	LD  C,(IX+2)	; Get the low byte of the depth
-	LD  B,(IX+3)
-	AND A
-	ADD HL,BC
-	POP BC
-	AND A ; Clear carry flag
-	SBC HL,DE ; HL = current, DE = last
-	ADD HL,DE ; Restore HL
-	JR  C,exit2
-	INC IY
+	LD  C,(IX+2)		; Get the low byte of the (reading + 2) reading
+	LD  B,(IX+3)		; Get the high byte of the (reading + 2) reading
+	ADD HL,BC			; Add the reading to the window variable
+	POP BC				; Restore the loop counter
+	EX  DE,HL			; Set last to current
+	AND A 				; Clear carry flag
+	SBC HL,DE			; Is current > last?
+	JR  NC,exit2		; Keep looping if not
+	INC IY				; Increment the depth increase counter
 exit2
-	EX  DE,HL	; Set last to current
-	DEC	 BC
-	LD  A,B
+	DEC	 BC				; Decrement the loop counter
+	LD  A,B				; and check if it's zero
 	OR  C
-	JR  NZ,loop2
-	LD  (32764),IY
-	RET
+	JR  NZ,loop2		; Keep looping if not
+	LD  (32764),IY		; Store the tally
+	RET					; Back to SOS
 
-data
+data					; Binary file containing the readings
 	incbin "readings.bin"
 end
-	EMPTYTRD "sonar.trd"
-	PAGE 0
+	EMPTYTRD "sonar.trd"		; Create an empty TRD disk if not already there
+	PAGE 0						; Not sure this is needed
+								; Save the assembled program as a CODE file on the disk
 	SAVETRD "sonar.trd","sonar.C",MAIN, end-MAIN
-	SAVESNA "sonar.sna",MAIN
-	DISPLAY "Code size is:", /D, end-MAIN
+	SAVESNA "sonar.sna",MAIN	; Save a snapshot
+	DISPLAY "Code size is:", /D, data-MAIN
+	DISPLAY "Data size is:", /D, end-data
+	DISPLAY "Total size is:", /D, end-MAIN

@@ -24,9 +24,3 @@ To keep code size down this uses Sinclair BASIC to print the results, which are 
 4. Save with `SAVE "sonar" LINE 0` to autorun
 5. Get the code size from the assembler output  
 5. Save the code with `SAVE "sonar" CODE 32768,{size of code}`
-
-
-## TODO  
-
-* Fix the Part 2 code  
-
