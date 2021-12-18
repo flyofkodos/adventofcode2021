@@ -4,7 +4,7 @@ My hacky solutions for the [Advent of Code 2021](https://adventofcode.com/2021) 
 
 ## Notes:  
 
-* These are done quickly to get the job done, best praactice and readability may suffer.  
+* These are done quickly to get the job done, best practice and readability may suffer.  
 * Most will be in C# since that's what I tend to think in. Other languages may come as time / boredom allows.  
 * Code will be pushed to the main branch. Yes, I know I should use the develop -> feature -> main workflow...  
 
