@@ -15,9 +15,6 @@ on:
 
 jobs:
   test:
-    strategy:
-      matrix:
-        configuration: [16/dotnet6/testing/tests.csproj]
 
     runs-on: windows-latest  # For a list of available runner types, refer to
                              # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on
@@ -36,4 +33,4 @@ jobs:
 
     # Execute all unit tests in the solution
     - name: Run the unit test
-      run: dotnet test ${{ matrix.configuration }}
+      run: dotnet test
