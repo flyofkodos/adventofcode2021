@@ -153,11 +153,79 @@ namespace AdventOfCode
             }
             return ret;
         }
+        public void Process()
+        {
+            switch (_type)
+            {
+                case (int)PacketTypes.Sum:
+                    Calculation = 0;
+                    foreach (var subPacket in _subPackets)
+                    {
+                        subPacket.Process();
+                        Calculation += subPacket.Calculation;
+                    }
 
+                    break;
+                case (int)PacketTypes.Product:
+                    Calculation = 1;
+                    foreach (var subPacket in _subPackets)
+                    {
+                        subPacket.Process();
+                        Calculation *= subPacket.Calculation;
+                    }
+
+                    break;
+                case (int)PacketTypes.Minimum:
+                    Calculation = 0;
+                    var min = new List<long>();
+                    foreach (var subPacket in _subPackets)
+                    {
+                        subPacket.Process();
+                        min.Add(subPacket.Calculation);
+                    }
+
+                    Calculation = min.Min();
+                    break;
+                case (int)PacketTypes.Maximum:
+                    Calculation = 0;
+                    var max = new List<long>();
+                    foreach (var subPacket in _subPackets)
+                    {
+                        subPacket.Process();
+                        max.Add(subPacket.Calculation);
+                    }
+
+                    Calculation = max.Max();
+                    break;
+                case (int)PacketTypes.Literal:
+                    Calculation = _literalValues[0];
+                    break;
+                case (int)PacketTypes.GreaterThan:
+                    Calculation = 0;
+                    foreach (var subPacket in _subPackets) subPacket.Process();
+                    Calculation = _subPackets[0].Calculation > _subPackets[1].Calculation ? 1 : 0;
+                    break;
+                case (int)PacketTypes.LessThan:
+                    Calculation = 0;
+                    foreach (var subPacket in _subPackets) subPacket.Process();
+                    Calculation = _subPackets[0].Calculation < _subPackets[1].Calculation ? 1 : 0;
+                    break;
+                case (int)PacketTypes.Equal:
+                    Calculation = 0;
+                    foreach (var subPacket in _subPackets) subPacket.Process();
+                    Calculation = _subPackets[0].Calculation == _subPackets[1].Calculation ? 1 : 0;
+                    break;
+
+                default:
+                    Console.WriteLine("This could bee error!!");
+                    break;
+            }
+        }
         // Return a string representation of the packet type
         public string TypeStr => ((PacketTypes)_type).ToString();
         public short Version => _version; // Public GET for the version
         public short LiteralValueCount => _literalValueCount; // Public Literal count GET
         public int SubPacketCount => _subPacketCount; // Public subpacket count GET
+        public long Calculation { get; private set; } = -1L;
     }
 }

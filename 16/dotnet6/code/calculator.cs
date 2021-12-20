@@ -15,10 +15,13 @@ long Part1(string input)
     return tree.VersionTotal(); // Return the total of all packet versions
 }
 
-int Part2(string input)
+long Part2(string input)
 {
-    // TODO
-    return -1;
+    // TODO - Fix this as it is currently too low
+    var binaryString = HexStringToBinaryString(input);
+    var part2 = new PacketTree(binaryString);
+    part2.Process();
+    return part2.Calculation;
 }
 
 // Convert the provided hex string to an equivalent binary
