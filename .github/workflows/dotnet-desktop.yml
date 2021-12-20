@@ -5,11 +5,13 @@ on:
     paths:
       - '**/dotnet6/**'
       - '.github/workflows/dotnet*.yaml'
+      - '*.sln'
   pull_request:
     branches: [ main ]
     paths:
       - '**/dotnet6/**'
       - '.github/workflows/dotnet*.yaml'
+      - '*.sln'
 
 jobs:
   build:
