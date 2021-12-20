@@ -13,4 +13,4 @@ My hacky solutions for the [Advent of Code 2021](https://adventofcode.com/2021) 
 * Unit tests.  
 * Maybe create single projects for each language and add each day's code as a module?  
 * Documentation.  
-* Enfore proper gates in the dev pipeline.  
+* Enforce proper gates in the dev pipeline.  
