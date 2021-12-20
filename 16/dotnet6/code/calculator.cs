@@ -1,3 +1,5 @@
+using AdventOfCode;
+
 var path = System.Reflection.Assembly.GetExecutingAssembly().Location;
 path = Path.GetDirectoryName(path);
 var input = File.ReadAllText($"{path}\\Day16Input.txt");
