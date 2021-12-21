@@ -8,8 +8,8 @@ int Part1(string lines)
 {
     var temp = lines.Split(':')[1].Split(',');
     var ystuff = temp[1].Split('=')[1].Split('.', StringSplitOptions.RemoveEmptyEntries);
-    var top = int.Parse(ystuff[0]);
-    var dy = (-top) - 1; // Highest value to end at the top line of the target area
+    var bottom = int.Parse(ystuff[0]);
+    var dy = (-bottom) - 1; // Highest value to end at the bottom of the target area
     return (dy * (dy + 1) / 2); // Return the sum of the positive vertical velocities
 }
 
