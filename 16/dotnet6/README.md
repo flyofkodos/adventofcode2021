@@ -1,6 +1,6 @@
 # Advent of Code Day 16  
 
-The C# version of the solution for the [Advent of Code 2021 day 1 puzzle](https://adventofcode.com/2021/day/16)  
+The C# version of the solution for the [Advent of Code 2021 day 16 puzzle](https://adventofcode.com/2021/day/16)  
 
 ## Design  
 
