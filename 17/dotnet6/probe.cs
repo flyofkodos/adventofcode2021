@@ -28,7 +28,7 @@ int Part2(string input)
     // Brute-force loop through every possible x velocity
     for (var xVelocity = minDx; xVelocity <= right; xVelocity++)
     {
-        // Brute force for every possible y velocity
+        // Brute-force for every possible y velocity
         for (var yVelocity = bottom; yVelocity <= maxDy; yVelocity++)
         {
             var x = 0; // Reset the starting point
