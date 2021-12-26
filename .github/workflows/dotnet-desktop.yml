@@ -18,7 +18,7 @@ jobs:
 
     strategy:
       matrix:
-        configuration: [01/dotnet6/sonar.csproj, 02/dotnet6/magnitude.csproj, 03/dotnet6/binary.csproj, 04/dotnet6/bingo.csproj, 05/dotnet6/vents.csproj, 06/dotnet6/fish.csproj, 07/dotnet6/depths.csproj, 08/dotnet6/digits.csproj, 09/dotnet6/basins.csproj, 10/dotnet6/brackets.csproj, 11/dotnet6/flashes.csproj, 12/dotnet6/caves.csproj, 13/dotnet6/folds.csproj, 14/dotnet6/polymer.csproj, 16/dotnet6/code/calculator.csproj, 17/dotnet6/probe.csproj]
+        configuration: [01/dotnet6/sonar.csproj, 02/dotnet6/magnitude.csproj, 03/dotnet6/binary.csproj, 04/dotnet6/bingo.csproj, 05/dotnet6/vents.csproj, 06/dotnet6/fish.csproj, 07/dotnet6/depths.csproj, 08/dotnet6/digits.csproj, 09/dotnet6/basins.csproj, 10/dotnet6/brackets.csproj, 11/dotnet6/flashes.csproj, 12/dotnet6/caves.csproj, 13/dotnet6/folds.csproj, 14/dotnet6/polymer.csproj, 16/dotnet6/code/calculator.csproj, 17/dotnet6/probe.csproj, 25/dotnet6/cucumbers.csproj]
 
     runs-on: windows-latest  # For a list of available runner types, refer to
                              # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on
