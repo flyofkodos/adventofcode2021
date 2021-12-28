@@ -5,7 +5,7 @@
 int part1(const std::vector<int> &);
 int part2(const std::vector<int> &);
 
-void main()
+int main()
 {
     std::ifstream infile;
     infile.open("input.txt");
@@ -20,6 +20,7 @@ void main()
 
     std::cout << "Part 1 is " << part1(input) << std::endl;
     std::cout << "Part 2 is " << part2(input) << std::endl;
+    return 0;
 }
 
 auto part1(const std::vector<int> &readings) -> int
