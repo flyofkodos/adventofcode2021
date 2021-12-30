@@ -53,38 +53,26 @@ long Part1(string[] lines, int steps)
     // Make a distinct list of elements
     var charList = chars.Distinct().ToList();
     charList.Sort();
-    var scores = new List<(char, long)>();
-    foreach (var (monomer, total) in pairs)
-    {
-        var score = scores.FirstOrDefault(s => s.Item1 == monomer[0]);
-        if (score.Item1 == '\0') // If not already in the list
-        {
-            scores.Add((monomer[0], total)); // Add the tally for character 1
-        }
-        else
-        {
-            // Or update the tally if it's in the list
-            scores.Add((monomer[0], score.Item2 + total));
-            scores.Remove(score);
-        }
-        score = scores.FirstOrDefault(s => s.Item1 == monomer[1]);
-        if (score.Item1 == '\0') // If not in the list already
-        {
-            scores.Add((monomer[1], total)); // Add the tally for character 2
-        }
-        else
-        {
-            // Or update the tally if it's in the list
-            scores.Add((monomer[1], score.Item2 + total));
-            scores.Remove(score);
-        }
-    }
+    var scores = new List<(char, long)> {(polymer[0], 1) // Add the score for the 1st monomer in the chain
+            };
+            // Only tally 2nd char of each pair so we don't get inflated values
+            foreach (var (monomer, total) in pairs)
+            {
+                var score = scores.FirstOrDefault(s => s.Item1 == monomer[1]);
+                if (score.Item1 == '\0') // If not in the list already
+                {
+                    scores.Add((monomer[1], total)); // Add the tally for character 2
+                }
+                else
+                {
+                    // Or update the tally if it's in the list
+                    scores.Add((monomer[1], score.Item2 + total));
+                    scores.Remove(score);
+                }
+            }
 
-    var sorted = scores.OrderByDescending(p => p.Item2).ToList();
-    // No idea why yet, but we need to halve the totals to get the real count
-    var retDouble = Math.Ceiling((double)sorted[0].Item2 / 2) - Math.Ceiling((double)sorted[^1].Item2 / 2);
-    var t = Convert.ToInt64(retDouble); // Ceiling needs a double type so convert back to long
-    return t;
+            var sorted = scores.OrderByDescending(p => p.Item2).ToList();
+            return sorted[0].Item2 - sorted[^1].Item2;
 }
 
 // Method to convert a string to a list of character pairs
