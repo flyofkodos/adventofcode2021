@@ -29,6 +29,7 @@ int Part1(string[] lines)
     {
         var temp = short.MaxValue;
         short minDist = 0;
+        // Much quicker than the List.Min() method
         foreach (var vert in vertex.Where(vert => vert.Distance < temp))
         {
             temp = vert.Distance;
