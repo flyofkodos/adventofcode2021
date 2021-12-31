@@ -12,14 +12,12 @@ int Part1(string[] lines)
     _width = lines[0].Length;
     var vertex = new List<(short x, short y, short Risk, short Distance)>();
     var dist = new short[_width * _height];
-    var prev = new (short x, short y)[_width, _height];
     for (short y = 0; y < _height; y++)
     {
         for (short x = 0; x < _width; x++)
         {
             vertex.Add((x, y, short.Parse(lines[y][x].ToString()), short.MaxValue));
             dist[x + (_width * y)] = short.MaxValue / 2;
-            prev[x, y] = (-1, -1);
         }
     }
     vertex.RemoveAt(0);
@@ -47,7 +45,6 @@ int Part1(string[] lines)
                 vertex.Remove(v);
                 v.Distance = alt;
                 vertex.Add(v);
-                prev[v.x, v.y] = (u.x, u.y);
             }
         }
         v = vertex.Find(a => a.x == u.x && a.y == u.y + 1);
@@ -60,7 +57,6 @@ int Part1(string[] lines)
                 vertex.Remove(v);
                 v.Distance = alt;
                 vertex.Add(v);
-                prev[v.x, v.y] = (u.x, u.y);
             }
         }
         v = vertex.Find(a => a.x == u.x - 1 && a.y == u.y);
@@ -73,7 +69,6 @@ int Part1(string[] lines)
                 vertex.Remove(v);
                 v.Distance = alt;
                 vertex.Add(v);
-                prev[v.x, v.y] = (u.x, u.y);
             }
         }
         v = vertex.Find(a => a.x == u.x + 1 && a.y == u.y);
@@ -86,7 +81,6 @@ int Part1(string[] lines)
                 vertex.Remove(v);
                 v.Distance = alt;
                 vertex.Add(v);
-                prev[v.x, v.y] = (u.x, u.y);
             }
         }
         vertex.Remove(u);
@@ -101,7 +95,6 @@ int Part2(string[] lines)
     var vertex = new List<(short x, short y, short Risk, short Distance)>();
     var dist = new int[25 * _width * _height];
     Array.Fill(dist, short.MaxValue / 2);
-    var prev = new (short x, short y)[_width * 5, _height * 5];
     for (short y = 0; y < _height; y++)
     {
         for (short x = 0; x < _width; x++)
@@ -117,7 +110,6 @@ int Part2(string[] lines)
                         newRisk -= 9;
                     }
                     vertex.Add(((short)(x + dx * _width), (short)(y + dy * _height), newRisk, short.MaxValue));
-                    prev[x + dx, y + dy] = (-1, -1);
                 }
             }
         }
@@ -151,7 +143,6 @@ int Part2(string[] lines)
                 vertex.Remove(v);
                 v.Distance = alt;
                 vertex.Add(v);
-                prev[v.x, v.y] = (u.x, u.y);
             }
         }
         v = vertex.Find(a => a.x == u.x && a.y == u.y + 1);
@@ -164,7 +155,6 @@ int Part2(string[] lines)
                 vertex.Remove(v);
                 v.Distance = alt;
                 vertex.Add(v);
-                prev[v.x, v.y] = (u.x, u.y);
             }
         }
         v = vertex.Find(a => a.x == u.x - 1 && a.y == u.y);
@@ -177,7 +167,6 @@ int Part2(string[] lines)
                 vertex.Remove(v);
                 v.Distance = alt;
                 vertex.Add(v);
-                prev[v.x, v.y] = (u.x, u.y);
             }
         }
         v = vertex.Find(a => a.x == u.x + 1 && a.y == u.y);
@@ -190,7 +179,6 @@ int Part2(string[] lines)
                 vertex.Remove(v);
                 v.Distance = alt;
                 vertex.Add(v);
-                prev[v.x, v.y] = (u.x, u.y);
             }
         }
         vertex.Remove(u);
