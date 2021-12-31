@@ -37,4 +37,4 @@ jobs:
 
     # Execute all unit tests in the solution
     - name: Run the program
-      run: dotnet run --project ${{ matrix.configuration }}
+      run: dotnet run -c Release --project ${{ matrix.configuration }}
