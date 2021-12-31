@@ -57,10 +57,10 @@ long Part2(string[] paths)
             for (var x = 0; x < routeCount; x++)
             {
                 var currentRoute = routesTried[x];
-                var next = pathList.Where(p => p.Item1 == currentRoute.Split(',')[^1]);
+                var next = pathList.Where(p => p.Item1 == currentRoute[((byte)(currentRoute.LastIndexOf(',') + 1))..]);
                 foreach (var (_, item2) in next)
                 {
-                    if (item2 == item2.ToLower() && currentRoute.Split(',').Contains(item2))
+                    if (item2 == item2.ToLower() && currentRoute.Contains(item2))
                     {
                         // Are we in the special cave
                         if (item2 != smallCave)
