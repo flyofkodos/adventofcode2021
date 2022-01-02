@@ -1,3 +1,5 @@
+using System.Collections.Concurrent;
+
 var path = System.Reflection.Assembly.GetExecutingAssembly().Location;
 path = Path.GetDirectoryName(path);
 var input = File.ReadAllLines($"{path}\\Day20Input.txt");
@@ -20,32 +22,27 @@ int Part1(string[] lines, int Passes)
         }
     }
 
-    var newPixels = new List<(int x, int y)>();
+    var newPixels = new ConcurrentBag<(int x, int y)>();
     for (var loop = 0; loop < Passes; loop++)
     {
         var startx = -(Passes * 2) + loop;
-        var endx = lines[^1].Length + (Passes * 2) - loop;
+        var endx = lines[^1].Length + Passes * 2 - loop;
         var starty = -(Passes * 2) + loop;
-        var endy = lines.Length + (Passes * 2) - loop;
+        var endy = lines.Length + Passes * 2 - loop;
         for (var px = startx; px <= endx; px++)
-        {
-            for (var py = starty; py <= endy; py++)
+            Parallel.For(starty, endy + 1, py =>
             {
                 var square = pixels.Where(t =>
                     t.x >= px - 1 && t.x <= px + 1 && t.y >= py - 1 && t.y <= py + 1).ToList();
                 var bin = 0;
-                foreach (var (x, y) in square)
-                {
-                    bin += 1 << ((py - y + 1) * 3 + px - x + 1);
-                }
 
-                if (algorithm[bin] == '#')
+                Parallel.ForEach(square, sq =>
                 {
-                    newPixels.Add((px, py));
-                }
-            }
-        }
-
+                    var (x, y) = sq;
+                    Interlocked.Add(ref bin, 1 << ((py - y + 1) * 3 + px - x + 1));
+                });
+                if (algorithm[bin] == '#') newPixels.Add((px, py));
+            });
         pixels.Clear();
         pixels.AddRange(newPixels);
         newPixels.Clear();
