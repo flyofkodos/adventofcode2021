@@ -60,7 +60,7 @@ int Part1(string[] lines)
             tempLine[x] = 'v';
             lines[(y + 1) % height] = new string(tempLine);
         }
-        moves++; // Icrement the steps count
+        moves++; // Increment the steps count
     } while (moved); // Keep going while cucumbers are moving
     return moves; // Return the number of steps taken
 }
