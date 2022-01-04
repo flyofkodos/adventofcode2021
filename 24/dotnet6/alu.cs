@@ -5,33 +5,29 @@ path = Path.GetDirectoryName(path);
 var input = File.ReadAllLines($"{path}\\Day24Input.txt");
 Console.WriteLine($"Part 1 is {Part1(input)}");
 
-string? Part1(string[] program)
+long Part1(string[] program)
 {
     var counter = 0;
     var lowest = long.MaxValue;
-    var result = Parallel.For(11111111111111, 99999999999999, (serial, loopState) =>
-         {
-             if (serial.ToString().Contains('0')) return;
-             if (Interlocked.Increment(ref counter) == 10000)
-             {
-                 Console.Write($"Testing {serial} - {lowest}    \r");
-                 counter = 0;
-             }
+    for (var serial = 99999999999999; serial >= 11111111111111; serial--)
+    {
+        if (serial.ToString().Contains('0')) continue;
+        if (++counter == 10000000)
+        {
+            Console.Write($"Testing {serial} - {lowest}    \r");
+            counter = 0;
+        }
 
-             var result = Validate(ref program, serial.ToString());
-             if (result == 0)
-             {
-                 Console.WriteLine($"Working serial {serial}");
-                 result = serial;
-                 loopState.Break();
-             }
-             if (lowest > result)
-             {
-                 Interlocked.Exchange(ref lowest, result);
-             }
-         }
-       );
-    return result.ToString();
+        var result = Calculate(serial.ToString());
+        if (result == 0)
+        {
+            Console.WriteLine($"\r\nWorking serial {serial}");
+            return serial;
+        }
+        lowest = lowest > result ? result : lowest;
+    }
+
+    return -1L;
 }
 
 long Validate(ref string[] lines, string model)
@@ -69,6 +65,72 @@ long Validate(ref string[] lines, string model)
     }
 
     return bits[3];
+}
+long Calculate(string serial)
+{
+    var digits = serial.ToCharArray();
+    var numbers = Array.ConvertAll(digits, c => c - '0');
+    var z = numbers[0] * 26L;
+    z += numbers[1] + 12;
+    z *= 26;
+    z += numbers[2] + 14;
+    z *= 26;
+    z += numbers[3];
+    z /= 26;
+    if (numbers[4] != numbers[3] - 2)
+    {
+        z *= 26;
+        z += numbers[4] + 3;
+    }
+    z *= 26;
+    z += numbers[5] + 15;
+    z *= 26;
+    z += numbers[6] + 11;
+    z /= 26;
+    if (numbers[7] != numbers[6] - 4)
+    {
+        z *= 26;
+        z += numbers[7] + 12;
+    }
+    z *= 26;
+    z += numbers[8] + 1;
+    z /= 26;
+    if (numbers[9] != numbers[8] - 8)
+    {
+        z *= 26;
+        z += numbers[9] + 10;
+    }
+
+    var x = z % 26;
+    z /= 26;
+    if (numbers[10] != x - 9)
+    {
+        z *= 26;
+        z += numbers[11];
+    }
+    x = z % 26;
+    z /= 26;
+    if (numbers[11] != x - 7)
+    {
+        z *= 26;
+        z += numbers[11] + 10;
+    }
+
+    x = z % 26;
+    z /= 26;
+    if (numbers[12] != x - 4)
+    {
+        z *= 26;
+        z += numbers[12] + 14;
+    }
+    x = z % 26;
+    z /= 26;
+    if (numbers[13] != x - 6)
+    {
+        z *= 26;
+        z += numbers[13] + 12;
+    }
+    return z;
 }
 
 long Part2(string[] lines)
