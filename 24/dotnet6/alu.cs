@@ -1,4 +1,5 @@
 using System.Reflection;
+using System.Collections.Concurrent;
 
 var path = Assembly.GetExecutingAssembly().Location;
 path = Path.GetDirectoryName(path);
@@ -9,10 +10,12 @@ long Part1(string[] program)
 {
     var counter = 0;
     var lowest = long.MaxValue;
-    for (var serial = 99999999999999; serial >= 11111111111111; serial--)
+    var working = new ConcurrentBag<long>();
+    Parallel.For(11111111111111, 100000000000000, serial =>
+    // for (var serial = 99999999999999; serial >= 11111111111111; serial--)
     {
-        if (serial.ToString().Contains('0')) continue;
-        if (++counter == 10000000)
+        if (serial.ToString().Contains('0')) return;
+        if (Interlocked.Increment(ref counter) == 10000000)
         {
             Console.Write($"Testing {serial} - {lowest}    \r");
             counter = 0;
@@ -22,12 +25,12 @@ long Part1(string[] program)
         if (result == 0)
         {
             Console.WriteLine($"\r\nWorking serial {serial}");
-            return serial;
+            working.Add(serial);
         }
         lowest = lowest > result ? result : lowest;
     }
-
-    return -1L;
+    );
+    return working.Max();
 }
 
 long Validate(ref string[] lines, string model)
