@@ -12,7 +12,10 @@ long Part1(string[] program)
     var best = 0L;
     var lowest = long.MaxValue;
     var working = new ConcurrentBag<long>();
-    Parallel.For(11111111111111, 100000000000000, serial =>
+    var opts = new ParallelOptions();
+    opts.MaxDegreeOfParallelism = Environment.ProcessorCount;
+    System.Console.WriteLine($"Running on {opts.MaxDegreeOfParallelism} threads.");
+    Parallel.For(11111111111111, 100000000000000, opts, serial =>
     // for (var serial = 99999999999999; serial >= 11111111111111; serial--)
     {
         if (serial.ToString().Contains('0')) return;
