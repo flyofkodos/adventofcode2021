@@ -1,48 +1,54 @@
 using System.Reflection;
-using System.Collections.Concurrent;
 
 var path = Assembly.GetExecutingAssembly().Location;
 path = Path.GetDirectoryName(path);
 var input = File.ReadAllLines($"{path}\\Day24Input.txt");
 Console.WriteLine($"Part 1 is {Part1(input)}");
+Console.WriteLine($"Part 2 is {Part2(input)}");
 
 long Part1(string[] program)
 {
-    var counter = 0;
-    var best = 0L;
-    var lowest = long.MaxValue;
-    var working = new ConcurrentBag<long>();
-    var opts = new ParallelOptions();
-    opts.MaxDegreeOfParallelism = Environment.ProcessorCount;
-    System.Console.WriteLine($"Running on {opts.MaxDegreeOfParallelism} threads.");
-    Parallel.For(11111111111111, 100000000000000, opts, serial =>
-    // for (var serial = 99999999999999; serial >= 11111111111111; serial--)
-    {
-        if (serial.ToString().Contains('0')) return;
-        if (Interlocked.Increment(ref counter) == 10000000)
-        {
-            Console.Write($"Testing {serial} - {lowest}    \r");
-            counter = 0;
-        }
+    // digit 1 = 7 to 9
+    // digit 2 = 1
+    // digit 3 = 1 to 2
+    // digit 4 = 3 to 9
+    // digit 5 = digit 4 - 2 (1 to 7)
+    // digit 6 = 1 to 3
+    // digit 7 = 5 to 9
+    // digit 8 = digit 7 - 4 (1 to 5)
+    // digit 9 = 9
+    // digit 10 = 1
+    // digit 11 = digit 6 + 6 (7 to 9)
+    // digit 12 = digit 3 + 7 (8 to 9)
+    // digit 13 = 9
+    // digit 14 = digit 1 - 6 (1 to 3)
+    var digits = new int[14];
+    digits[0] = 9;
+    digits[1] = 1;
+    digits[2] = 2;
+    digits[3] = 9;
+    digits[4] = digits[3] - 2;
+    digits[5] = 3;
+    digits[6] = 9;
+    digits[7] = digits[6] - 4;
+    digits[8] = 9;
+    digits[9] = 1;
+    digits[10] = digits[5] + 6;
+    digits[11] = digits[2] + 7;
+    digits[12] = 9;
+    digits[13] = digits[0] - 6;
 
-        var result = Calculate(serial.ToString());
-        if (result == 0)
-        {
-            Console.WriteLine($"\r\nWorking serial {serial}");
-            working.Add(serial);
-        }
-        if (lowest == result && serial > best)
-            best = result;
-        if (lowest <= result) return;
-        lowest = result;
-        best = serial;
-        if (Validate(ref program, serial.ToString()) != result)
-        {
-            Console.WriteLine($"Serial {serial} doesn't validate!!");
-        }
+    var serial = 0L;
+    for (var d = 0; d < 14; d++)
+    {
+        serial *= 10;
+        serial += digits[d];
     }
-    );
-    return working.Max();
+    // Sanity check
+    if (0 == Validate(ref program, serial.ToString()))
+        return serial;
+    return -1;
+
 }
 
 long Validate(ref string[] lines, string model)
@@ -81,53 +87,47 @@ long Validate(ref string[] lines, string model)
 
     return bits[3];
 }
-long Calculate(string serial)
-{
-    var digits = serial.ToCharArray();
-    var numbers = Array.ConvertAll(digits, c => c - '0');
-    var z = ((numbers[0] * 26L + numbers[1] + 12) * 26 + numbers[2] + 14);
-    if (numbers[4] != numbers[3] - 2)
-    {
-        z = z * 26 + numbers[4] + 3;
-    }
-    z = z * 26 + numbers[5] + 15;
 
-    if (numbers[7] != numbers[6] - 4)
-    {
-        z = z * 26 + numbers[7] + 12;
-    }
-    if (numbers[9] != numbers[8] - 8)
-    {
-        z = z * 26 + numbers[9] + 12;
-    }
-    var x = z % 26;
-    z /= 26;
-    if (numbers[10] != x - 9)
-    {
-        z = z * 26 + numbers[11] + 3;
-    }
-    x = z % 26;
-    z /= 26;
-    if (numbers[11] != x - 7)
-    {
-        z = z * 26 + numbers[11] + 10;
-    }
-    x = z % 26;
-    z /= 26;
-    if (numbers[12] != x - 4)
-    {
-        z = z * 26 + numbers[12] + 14;
-    }
-    x = z % 26;
-    z /= 26;
-    if (numbers[13] != x - 6)
-    {
-        z = z * 26 + numbers[13] + 12;
-    }
-    return z;
-}
-
-long Part2(string[] lines)
+long Part2(string[] program)
 {
-    return -1L;
+    // digit 1 = 7 to 9
+    // digit 2 = 1
+    // digit 3 = 1 to 2
+    // digit 4 = 3 to 9
+    // digit 5 = digit 4 - 2 (1 to 7)
+    // digit 6 = 1 to 3
+    // digit 7 = 5 to 9
+    // digit 8 = digit 7 - 4 (1 to 5)
+    // digit 9 = 9
+    // digit 10 = 1
+    // digit 11 = digit 6 + 6 (7 to 9)
+    // digit 12 = digit 2 + 7 ( 8 to 9)
+    // digit 13 = 9
+    // digit 14 = digit 1 - 6 (1 to 3)
+    var digits = new int[14];
+    digits[0] = 7;
+    digits[1] = 1;
+    digits[2] = 1;
+    digits[3] = 3;
+    digits[4] = digits[3] - 2;
+    digits[5] = 1;
+    digits[6] = 5;
+    digits[7] = digits[6] - 4;
+    digits[8] = 9;
+    digits[9] = 1;
+    digits[10] = digits[5] + 6;
+    digits[11] = digits[2] + 7;
+    digits[12] = 9;
+    digits[13] = digits[0] - 6;
+
+    var serial = 0L;
+    for (var d = 0; d < 14; d++)
+    {
+        serial *= 10;
+        serial += digits[d];
+    }
+    // Sanity check
+    if (0 == Validate(ref program, serial.ToString()))
+        return serial;
+    return -1;
 }
