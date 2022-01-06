@@ -4,13 +4,13 @@ on:
   push:
     paths:
       - '**/dotnet6/**'
-      - '.github/workflows/dotnet*.yaml'
+      - '.github/workflows/dotnet*.yml'
       - '/*.sln'
   pull_request:
     branches: [ main ]
     paths:
       - '**/dotnet6/**'
-      - '.github/workflows/dotnet*.yaml'
+      - '.github/workflows/dotnet*.yml'
       - '/*.sln'
 
 jobs:
