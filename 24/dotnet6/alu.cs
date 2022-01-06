@@ -9,6 +9,7 @@ Console.WriteLine($"Part 1 is {Part1(input)}");
 long Part1(string[] program)
 {
     var counter = 0;
+    var best = 0L;
     var lowest = long.MaxValue;
     var working = new ConcurrentBag<long>();
     Parallel.For(11111111111111, 100000000000000, serial =>
@@ -27,7 +28,15 @@ long Part1(string[] program)
             Console.WriteLine($"\r\nWorking serial {serial}");
             working.Add(serial);
         }
-        lowest = lowest > result ? result : lowest;
+        if (lowest == result && serial > best)
+            best = result;
+        if (lowest <= result) return;
+        lowest = result;
+        best = serial;
+        if (Validate(ref program, serial.ToString()) != result)
+        {
+            Console.WriteLine($"Serial {serial} doesn't validate!!");
+        }
     }
     );
     return working.Max();
@@ -73,65 +82,44 @@ long Calculate(string serial)
 {
     var digits = serial.ToCharArray();
     var numbers = Array.ConvertAll(digits, c => c - '0');
-    var z = numbers[0] * 26L;
-    z += numbers[1] + 12;
-    z *= 26;
-    z += numbers[2] + 14;
-    z *= 26;
-    z += numbers[3];
-    z /= 26;
+    var z = ((numbers[0] * 26L + numbers[1] + 12) * 26 + numbers[2] + 14);
     if (numbers[4] != numbers[3] - 2)
     {
-        z *= 26;
-        z += numbers[4] + 3;
+        z = z * 26 + numbers[4] + 3;
     }
-    z *= 26;
-    z += numbers[5] + 15;
-    z *= 26;
-    z += numbers[6] + 11;
-    z /= 26;
+    z = z * 26 + numbers[5] + 15;
+
     if (numbers[7] != numbers[6] - 4)
     {
-        z *= 26;
-        z += numbers[7] + 12;
+        z = z * 26 + numbers[7] + 12;
     }
-    z *= 26;
-    z += numbers[8] + 1;
-    z /= 26;
     if (numbers[9] != numbers[8] - 8)
     {
-        z *= 26;
-        z += numbers[9] + 10;
+        z = z * 26 + numbers[9] + 12;
     }
-
     var x = z % 26;
     z /= 26;
     if (numbers[10] != x - 9)
     {
-        z *= 26;
-        z += numbers[11];
+        z = z * 26 + numbers[11] + 3;
     }
     x = z % 26;
     z /= 26;
     if (numbers[11] != x - 7)
     {
-        z *= 26;
-        z += numbers[11] + 10;
+        z = z * 26 + numbers[11] + 10;
     }
-
     x = z % 26;
     z /= 26;
     if (numbers[12] != x - 4)
     {
-        z *= 26;
-        z += numbers[12] + 14;
+        z = z * 26 + numbers[12] + 14;
     }
     x = z % 26;
     z /= 26;
     if (numbers[13] != x - 6)
     {
-        z *= 26;
-        z += numbers[13] + 12;
+        z = z * 26 + numbers[13] + 12;
     }
     return z;
 }
