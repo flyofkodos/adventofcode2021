@@ -1,0 +1,31 @@
+name: Run PowerShell on Windows
+on:
+  push:
+    paths:
+      - '**/psh/**'
+      - '.github/workflows/powershell*.yml'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - '**/psh/**'
+      - '.github/workflows/powershell*.yml'
+
+jobs:
+  run: 
+    strategy:
+      matrix:
+        configuration: [01/psh/sonar.ps1]
+
+    runs-on: windows-latest  # For a list of available runner types, refer to
+                             # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+
+    # Run thr script
+    - name: Run the script
+      run: ${{ matrix.configuration }}
