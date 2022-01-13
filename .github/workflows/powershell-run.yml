@@ -1,4 +1,4 @@
-name: Run PowerShell on Windows
+name: Run PowerShell on Ubuntu
 on:
   push:
     paths:
@@ -16,7 +16,7 @@ jobs:
       matrix:
         configuration: [01/psh/sonar.ps1]
 
-    runs-on: windows-latest  # For a list of available runner types, refer to
+    runs-on: ubuntu-latest  # For a list of available runner types, refer to
                              # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on
 
     steps:
