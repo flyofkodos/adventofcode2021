@@ -1,4 +1,4 @@
-$readings = Get-Content input.txt
+$readings = Get-Content $PSScriptRoot\input.txt
 
 $increases = 0
 $last_depth = 32767
