@@ -27,7 +27,9 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
           cache: maven
+      - name: Change to folder
+        run: cd  ${{matrix.configuration}}
       - name: Build with Maven
-        run: mvn -B package --file ${{matrix.configuration}}/pom.xml
+        run: mvn -B package
       - name: Run with Maven
         run: mvn exec:java -Dexec.mainClass=aoc2021.Aoc
