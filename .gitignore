@@ -410,3 +410,4 @@ _deps
 # M68k output
 *.s68
 *.l68
+/.metadata/
