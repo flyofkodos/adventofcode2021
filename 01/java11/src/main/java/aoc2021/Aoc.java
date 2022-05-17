@@ -24,31 +24,31 @@ public class Aoc {
 		System.out.println("Part 2 is " + part2(content));
 	}
 
-	static private int increases;
-	private static Integer last_depth;
+	private static int increases;
+	private static Integer lastDepth;
 
 	private static int part1(List<Integer> readings) {
 		increases = 0;
-		last_depth = 32767;
+		lastDepth = 32767;
 
-		readings.forEach((reading) -> {
-			if (reading > last_depth) {
+		readings.forEach(reading -> {
+			if (reading > lastDepth) {
 				increases++;
 			}
-			last_depth = reading;
+			lastDepth = reading;
 		});
 		return increases;
 	}
 
 	private static int part2(List<Integer> readings) {
 		increases = 0;
-		last_depth = 32767;
+		lastDepth = 32767;
 		for (int x = 0; x < readings.size() - 2; x++) {
 			int window = readings.get(x) + readings.get(x + 1) + readings.get(x + 2);
-			if (window > last_depth) {
+			if (window > lastDepth) {
 				increases++;
 			}
-			last_depth = window;
+			lastDepth = window;
 		}
 		return increases;
 	}

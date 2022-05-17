@@ -2,7 +2,7 @@ import unittest
 from binary import part1, part2
 
 
-class Test_day02_test(unittest.TestCase):
+class day03_test(unittest.TestCase):
 
     def test_part1(self):
         test_data = [0b00100, 0b11110, 0b10110, 0b10111, 0b10101,

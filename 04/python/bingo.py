@@ -20,8 +20,8 @@ def set_vars(lines):
     # Calculate the number of rows per board
     row_count = int((len(lines) - 1) / board_count - 1)
     column_count = len(lines[2].split(' '))  # and columns
-    boards = [[[0 for k in range(column_count)] for j in range(
-        row_count)] for i in range(board_count)]
+    boards = [[[0 for _ in range(column_count)] for _ in range(
+        row_count)] for _ in range(board_count)]
     losing_boards.clear()
     for board_no in range(0, board_count):  # Make sure all boards are in play
         losing_boards.append(board_no)
@@ -90,11 +90,11 @@ def part1(readings):
         board = check_boards()
         if board >= 0:
             fullline = True
-    sum = 0
+    boards_sum = 0
     for line in range(0, row_count):
         for number in range(0, column_count):
-            sum += boards[board][line][number] if boards[board][line][number] >= 0 else 0
-    return sum * ball
+            boards_sum += boards[board][line][number] if boards[board][line][number] >= 0 else 0
+    return boards_sum * ball
 
 
 def part2(readings):
@@ -114,11 +114,11 @@ def part2(readings):
             board = check_boards(True)
             if board >= 0:
                 fullline = True
-    sum = 0
+    boards_sum = 0
     for line in range(0, row_count):
         for number in range(0, column_count):
-            sum += boards[board][line][number] if boards[board][line][number] >= 0 else 0
-    return sum * ball
+            boards_sum += boards[board][line][number] if boards[board][line][number] >= 0 else 0
+    return boards_sum * ball
 
 
 def main():

@@ -3,7 +3,7 @@ import sys
 
 
 def process(input, diagonals=False):
-    grid = [[0 for x in range(1000)] for y in range(1000)]
+    grid = [[0 for _ in range(1000)] for _ in range(1000)]
     for vent in input:
         parts = vent.split(' ')
         start = list(map(int, parts[0].split(',')))

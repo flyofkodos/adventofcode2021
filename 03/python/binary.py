@@ -26,60 +26,60 @@ def part2(readings):
 
     # Part 2
     bits = len(bin(max(readings))) - 2
-    tempList = []
+    temp_list = []
     for item in readings:
-        tempList.append(item)
+        temp_list.append(item)
     list1 = []
     for x in range(bits - 1, -1, -1):
         bit = 1 << x
         ones = 0
         zeros = 0
-        for y in tempList:
+        for y in temp_list:
             if y & bit > 0:
                 ones += 1
             else:
                 zeros += 1
         if ones < zeros:
-            toRemove = bit
+            to_remove = bit
         else:
-            toRemove = 0
+            to_remove = 0
         list1.clear()
-        for reading in tempList:
-            if reading & bit != toRemove:
+        for reading in temp_list:
+            if reading & bit != to_remove:
                 list1.append(reading)
-        tempList.clear()
+        temp_list.clear()
         for item in list1:
-            tempList.append(item)
-        if len(tempList) == 1:
+            temp_list.append(item)
+        if len(temp_list) == 1:
             break
-    gamma = tempList[0]
+    gamma = temp_list[0]
 
-    tempList.clear()
+    temp_list.clear()
     for item in readings:
-        tempList.append(item)
+        temp_list.append(item)
     for x in range(bits - 1, -1, -1):
         bit = 1 << x
         ones = 0
         zeros = 0
-        for y in tempList:
+        for y in temp_list:
             if y & bit > 0:
                 ones += 1
             else:
                 zeros += 1
         if ones < zeros:
-            toRemove = bit
+            to_remove = bit
         else:
-            toRemove = 0
+            to_remove = 0
         list1.clear()
-        for reading in tempList:
-            if reading & bit == toRemove:
+        for reading in temp_list:
+            if reading & bit == to_remove:
                 list1.append(reading)
-        tempList.clear()
+        temp_list.clear()
         for item in list1:
-            tempList.append(item)
-        if len(tempList) == 1:
+            temp_list.append(item)
+        if len(temp_list) == 1:
             break
-    epsilon = tempList[0]  # should be 10 in test
+    epsilon = temp_list[0]  # should be 10 in test
     return gamma * epsilon
 
 
@@ -87,9 +87,9 @@ def main():
     file_path = os.path.join(os.path.dirname(__file__), "input.txt")
     with open(file_path, "+rt") as f:
         lines = f.readlines()
-        intList = [int(i, 2) for i in lines]
-    print("Part 1 %d" % (part1(intList)))
-    print("Part 2 %d" % (part2(intList)))
+        int_list = [int(i, 2) for i in lines]
+    print("Part 1 %d" % (part1(int_list)))
+    print("Part 2 %d" % (part2(int_list)))
 
 
 if __name__ == "__main__":

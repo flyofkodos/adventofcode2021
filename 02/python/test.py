@@ -2,7 +2,7 @@ import unittest
 from magnitude import part1, part2
 
 
-class Test_day02_test(unittest.TestCase):
+class day02_test(unittest.TestCase):
 
     def test_part1(self):
         test_data = ["forward 5", "down 5",
