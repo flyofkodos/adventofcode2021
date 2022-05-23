@@ -30,4 +30,4 @@ jobs:
       - name: Build with Maven
         run: mvn -B package --file ${{matrix.configuration}}/pom.xml
       - name: Run with Maven
-        run: cd ${{matrix.configuration}} && mvn exec:java -Dexec.mainClass=aoc2021.Aoc
+        run: cd ${{matrix.configuration}} && mvn exec:java -Dexec.mainClass=aoc.aoc2021.Aoc
