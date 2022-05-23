@@ -1,9 +1,11 @@
 /**
  *
  */
-package aoc2021;
+package aoc.aoc2021;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
@@ -11,17 +13,19 @@ import java.util.stream.Collectors;
 
 public class Aoc {
 
+	static Logger logger = Logger.getLogger(Aoc.class.getName());
 	/**
 	 * @param args
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws IOException {
+		
 		Path inputPath = Path.of("input.txt");
 		List<String> lines = Files.readAllLines(inputPath);
 		List<Integer> content = lines.stream().map(Integer::parseInt).collect(Collectors.toList());
 		lines.clear();
-		System.out.println("Part 1 is " + part1(content));
-		System.out.println("Part 2 is " + part2(content));
+		logger.log(Level.INFO,"Part 1 is {0}", part1(content));
+		logger.log(Level.INFO,"Part 2 is {0}", part2(content));
 	}
 
 	private static int increases;
